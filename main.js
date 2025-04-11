@@ -37,6 +37,10 @@ app.whenReady().then(() => {
     return await logic.openVideoFolder();
   });
 
+  ipcMain.handle('start', async (event) => {
+    return await logic.start();
+  });
+
   ipcMain.handle('update-fingerprint', async (event, id) => {
     return await logic.updateFingerprint(id);
   });
