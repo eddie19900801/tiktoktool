@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>TikTok Tool - 桌面应用</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>TikTok Tool - 账号管理</h1>
+  <!-- 增加全局操作按钮 -->
+  <button id="openCSVBtn">打开 CSV</button>
+  <button id="uploadVideoBtn">视频上传</button>
+  <button id="startBot">任务开始</button>
+
+  <table id="accountTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>IP</th>
+        <th>Port</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>TK_Username</th>
+        <th>TK_Password</th>
+        <th>操作</th>
+        <th>登录状态</th>
+        <th>代理状态</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- CSV数据记录将显示在这里 -->
+    </tbody>
+  </table>
+
+  <!-- 此处已不需要添加代理的模态框 -->
+  <script src="renderer.js"></script>
+</body>
+</html>
