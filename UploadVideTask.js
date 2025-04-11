@@ -9,7 +9,7 @@ class UploadVideTask {
     }
 
    
-    async start(page, videoPath, data){
+    async start(page, videoPath){
         await page.goto('https://www.tiktok.com/tiktokstudio/upload', { waitUntil: 'domcontentloaded',  timeout: 600000 });
 
 
@@ -63,7 +63,6 @@ class UploadVideTask {
            // 再额外等待 5 秒
            await page.waitForTimeout(5000);
 
-           store.set(this.data.IP, this.data.ID);
         } catch (e) {
           if (e.name === 'TimeoutError') {
             console.error('等待进度条到 100% 超时，退出任务');
