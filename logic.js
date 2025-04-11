@@ -15,6 +15,7 @@ const { BotManager } = require('./botmanager');
 let records;
 let botmsg;
 let videopath;
+let dataList;
 const launchOptions = {
   headless: false,
   userAgent:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.6834.111 Safari/537.36',
@@ -66,7 +67,12 @@ const launchOptions = {
 
 
 //初始化机器人;
-function initBotManager(dataList, videopath){
+function initBotManager(){
+  if(dataList == null)
+  {
+    console.log("需要先选择CSV");
+    return;
+  }
   launchOptions.executablePath =chromePath.getChromePath();
   botmsg = new BotManager();
   botmsg.setData(50, './my-user-data-dir-', videopath, dataList, launchOptions);
@@ -122,23 +128,24 @@ module.exports = {
 
   verify:async(data)=>{
 
-    console.log('verify', data);
-    console.log(data);
+    console.log('module.verify:', data);
 
-    //const task = new LoginTask(data);
-   //botmsg.createBot(data, opt);
-    //bot.addTask(task);
+    if(!botmsg)
+    {
+      initBotManager();
+    }
+    let bot = await botmsg.getBot(data);
+    bot.start(50000);
   },
 
   // 获取所有记录
-  open: async (data) => {
+  start: async () => {
     console.log(data);
-    // const opt = {
-    //   proxy:getProxy(data.IP, data.Port, data.Username, data.Password),
-    //   ...launchOptions
-    // }
-
-    // const bot = await botmsg.createBot(data, opt);
+    if(!botmsg)
+      {
+        initBotManager();
+      }
+      botmsg.runBot();
 
   },
   // 添加代理记录，返回 { success: true, id }
@@ -152,12 +159,14 @@ openVideoFolder: async () => {
   if (result.canceled || result.filePaths.length === 0) {
     return null;
   }
+  videopath = path;
   return result.filePaths[0];
 },
 
   // 根据 id 更新 cookie 数据
-  openF: async (path, dataList) => {
-    initBotManager(dataList, path);
+  openF: async (data) => {
+    dataList = data;
+    console.log('openF.dataList', dataList);
   },
   // 打开指纹浏览器
   updateFingerprint: async (id) => {

@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("csvLoaded", "true");
     };
     reader.readAsText(file, "UTF-8");
+ 
   }
 
   // 简单的 CSV 解析（这里假设 CSV 文件分隔符为逗号，并且第一行为表头）
@@ -29,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   let dataList;
-  let videpath;
 
   // 根据 CSV 数据对象数组渲染表格
   function renderTable(records) {
@@ -57,11 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       tbody.appendChild(tr);
     });
-    bindTableButtons();
+    bindTableButtons(records);
   }
 
   // 绑定每行操作按钮的点击事件
-  function bindTableButtons() {
+  function bindTableButtons(recordslist) {
+
+    window.api.openF(recordslist);
     document.querySelectorAll(".manualOpenBtn").forEach(button => {
       button.addEventListener("click", () => {
         const row = button.closest("tr");
@@ -80,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log('datadata:', data);
       // 将数据转换为 JSON 格式字符串并输出
       const jsonStr = JSON.stringify(data);
-       window.api.open(data);
+      // window.api.verify(data);
 
       });
     });
@@ -99,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "TK_Username": cells[5].textContent.trim(),
           "TK_Password": cells[6].textContent.trim()
         };
+        console.log('verify data :', data);
         window.api.verify(data);
       });
     });
@@ -142,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("请选择账号VSV" );
         return;
       }
-      window.api.openF(videpath, dataList);
+      window.api.start();
   
   });
 

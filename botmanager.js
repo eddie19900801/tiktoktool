@@ -189,7 +189,18 @@ class BotManager {
     BotManager.instance = this;
   }
 
+  async getBot(data){
 
+    let group = this.bots[data.IP];
+    for(let i = 0;i < group.length; i ++)
+    {
+      if(group[i].id == data.ID)
+      {
+        return group[i];
+      }
+    }
+    return null;
+  }
   async runBot(){
     const disTime = 10*1000;
     //
@@ -232,8 +243,7 @@ class BotManager {
 let bot;
 let ip;
 let data;
-console.log('dataList', dataList.length);
-console.log('dataList', dataList[0]);
+console.log('dataList.length', dataList.length);
 
 for (let i = 0; i < dataList.length; i++) {
   data = dataList[i];
@@ -263,11 +273,8 @@ for (const ip in this.bots) {
     }
   }
 }
-
     console.log('bots.length:', z);
-
-
-    this.runBot();
+   // this.runBot();
   }
 }
 
